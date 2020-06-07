@@ -1,4 +1,4 @@
-# Json Extract Library (go-jel)
+# Json Extract Library (JEL)
 This is a library to simplify extract json values in golang
 
 ## Features 
