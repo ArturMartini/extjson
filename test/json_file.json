@@ -1,0 +1,35 @@
+{
+  "key": "value",
+  "key_obj": {
+    "key1": "value1",
+    "key2": "value2"
+  },
+  "key_obj2": {
+      "key_obj3": {
+        "key3-1": "value3-1",
+        "key3-2": "value3-2"
+      }
+  },
+  "intKey": 1,
+  "intKey_obj": {
+    "key1": 1,
+    "key2": 2
+  },
+  "intKey_obj2": {
+    "intKey_obj3": {
+      "key1": 1,
+      "key2": 2
+    }
+  },
+  "complexObj": {
+    "key1": 1,
+    "key2": 2,
+    "complexObj2" : {
+      "complexObj3": {
+        "complexObj4": {
+          "key1": "complex"
+        }
+      }
+    }
+  }
+}
