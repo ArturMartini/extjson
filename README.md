@@ -6,8 +6,20 @@ This is a library to simplify extract json values in golang
 * Casting values to int and float
 * Support to reference multiple files
 
-Usage:
 
+File:
+```json
+{
+  "key": "value",
+  "key1": {
+    "key2": "value2"
+  },
+  "keyInt": 1,
+  "keyFloat": 1.00
+}
+```
+
+Usage:
 ```go
 package main 
 import (
@@ -22,7 +34,7 @@ err := jel.LoadFile("test/json_file.json", "alias_file")
 value := jel.GetStrValue("alias_file", "key")
 
 //Suport to get value in complex structure json using by '.' between keys
-value2 := jel.GetStrValue("alias_file", "key.key2")
+value2 := jel.GetStrValue("alias_file", "key1.key2")
 
 //Suport to get int and float values 
 intValue := jel.GetIntValue("alias_file", "keyInt")
