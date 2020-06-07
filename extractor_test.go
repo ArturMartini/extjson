@@ -1,6 +1,7 @@
 package gel
 
 import (
+	"errors"
 	"fmt"
 	"testing"
 )
@@ -20,57 +21,99 @@ func TestLoadFiles(t *testing.T) {
 
 func TestGetValue(t *testing.T) {
 	expected := "value"
-	value := GetStrValue("json_file", "key")
+	value := GetStr("json_file", "key")
 	validate(t, expected, value)
 }
 
-func TestGetStrValueInnerObject(t *testing.T) {
+func TestGetStrInnerObject(t *testing.T) {
 	expected := "value1"
-	value := GetStrValue("json_file", "key_obj.key1")
+	value := GetStr("json_file", "key_obj.key1")
 	validate(t, expected, value)
 }
 
-func TestGetStrValueInnerObjectLayerTwo(t *testing.T) {
+func TestGetStrInnerObjectLayerTwo(t *testing.T) {
 	expected := "value3-2"
-	value := GetStrValue("json_file", "key_obj2.key_obj3.key3-2")
+	value := GetStr("json_file", "key_obj2.key_obj3.key3-2")
 	validate(t, expected, value)
 }
 
-func TestGetIntValue(t *testing.T) {
+func TestGetInt(t *testing.T) {
 	expected := 1
-	value := GetIntValue("json_file", "intKey")
+	value := GetInt("json_file", "intKey")
 	validate(t, expected, value)
 }
 
-func TestGetIntValueInnerObject(t *testing.T) {
+func TestGetIntInnerObject(t *testing.T) {
 	expected := 2
-	value := GetIntValue("json_file", "intKey_obj.key2")
+	value := GetInt("json_file", "intKey_obj.key2")
 	validate(t, expected, value)
 }
 
-func TestGetIntValueInnerObjectLayerTwo(t *testing.T) {
+func TestGetIntInnerObjectLayerTwo(t *testing.T) {
 	expected := 2
-	value := GetIntValue("json_file", "intKey_obj2.intKey_obj3.key2")
+	value := GetInt("json_file", "intKey_obj2.intKey_obj3.key2")
+	validate(t, expected, value)
+}
+
+func TestGetFloat(t *testing.T) {
+	expected := 1.01
+	value := GetFloat("json_file", "floatKey")
+	validate(t, expected, value)
+}
+
+func TestGetFloatInnerObject(t *testing.T) {
+	expected := 2.01
+	value := GetFloat("json_file", "floatKey_obj.key2")
+	validate(t, expected, value)
+}
+
+func TestGetFloatInnerObjectLayerTwo(t *testing.T) {
+	expected := 2.02
+	value  := GetFloat("json_file", "floatKey_obj2.intKey_obj3.key2")
 	validate(t, expected, value)
 }
 
 func TestGetStrComplexObject(t *testing.T) {
 	expected := "complex"
-	value := GetStrValue("json_file", "complexObj.complexObj2.complexObj3.complexObj4.key1")
+	value := GetStr("json_file", "complexObj.complexObj2.complexObj3.complexObj4.key1")
 	validate(t, expected, value)
 }
 
 func TestMutipleFiles(t *testing.T) {
 	expected := "value"
-	value := GetStrValue("json_file2", "key2")
+	value := GetStr("json_file2", "key2")
 	validate(t, expected, value)
 
 	expected = "value1"
-	value = GetStrValue("json_file2", "key2_obj.key1")
+	value = GetStr("json_file2", "key2_obj.key1")
 	validate(t, expected, value)
 
 	expected = "value2"
-	value = GetStrValue("json_file2", "key2_obj.key2")
+	value = GetStr("json_file2", "key2_obj.key2")
+	validate(t, expected, value)
+}
+
+func TestLoadError(t *testing.T) {
+	expected := errors.New("open not/exists: no such file or directory")
+	err := LoadFile("not/exists", "notExists")
+	validate(t, expected.Error(), err.Error())
+}
+
+func TestStrError(t *testing.T) {
+	expected := ""
+	value := GetStr("json_file", "not.exists")
+	validate(t, expected, value)
+}
+
+func TestIntError(t *testing.T) {
+	expected := -1
+	value := GetInt("json_file", "not.exists")
+	validate(t, expected, value)
+}
+
+func TestFloatError(t *testing.T) {
+	expected := -1.00
+	value := GetFloat("json_file", "not.exists")
 	validate(t, expected, value)
 }
 

@@ -21,6 +21,15 @@
       "key2": 2
     }
   },
+  "floatKey": 1.01,
+  "floatKey_obj": {
+    "key2": 2.01
+  },
+  "floatKey_obj2": {
+    "intKey_obj3" : {
+      "key2": 2.02
+    }
+  },
   "complexObj": {
     "key1": 1,
     "key2": 2,
