@@ -1,4 +1,4 @@
-# Goland Extract Library (GEL)
+# Golang Extract Library (GEL)
 This is a library to simplify extract json values in golang
 
 ## Features 
