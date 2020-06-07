@@ -23,7 +23,7 @@ Usage:
 ```go
 package main 
 import (
-    "github.com/arturmartini/jel"
+    "github.com/arturmartini/gel"
     "fmt"
 )
 
