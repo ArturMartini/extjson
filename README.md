@@ -38,7 +38,7 @@ func main() {
     //Load file in memory 
     err := gel.LoadFile("test/json_file.json", "file")
     
-    //Reference of file name and key property to return the string value
+    //Reference of key property to return the string value
     value := gel.GetStr("key")
     
     //Suport to get value in complex structure json using by '.' between keys
@@ -55,10 +55,10 @@ func main() {
     //Setting context to previous file
     gel.SetContext("file")
         
-    fmt.Println(value)      // output "value"
+    fmt.Println(value)      // "value"
     fmt.Println(value2)     // "value2"
     fmt.Println(intValue)   // 1
     fmt.Println(floatValue) // 1.00
-    fmt.Println(otherValue) // value99
+    fmt.Println(otherValue) // "value99"
 }
 ```
