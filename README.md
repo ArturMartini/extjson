@@ -19,6 +19,13 @@ File:
 }
 ```
 
+File2:
+```json
+{
+  "key": "value99"
+}
+```
+
 Usage:
 ```go
 package main 
@@ -29,21 +36,29 @@ import (
 
 func main() {
     //Load file in memory 
-    err := gel.LoadFile("test/json_file.json", "alias_file")
+    err := gel.LoadFile("test/json_file.json", "file")
     
     //Reference of file name and key property to return the string value
-    value := gel.GetStr("alias_file", "key")
+    value := gel.GetStr("key")
     
     //Suport to get value in complex structure json using by '.' between keys
-    value2 := gel.GetStr("alias_file", "key1.key2")
+    value2 := gel.GetStr("key1.key2")
     
     //Suport to get int and float values 
-    intValue := gel.GetInt("alias_file", "keyInt")
-    floatValue := gel.GetFloat("alias_file", "keyFloat")
+    intValue := gel.GetInt("keyInt")
+    floatValue := gel.GetFloat("keyFloat")
     
-    fmt.Println(value) // output "value"
-    fmt.Println(value2) // output "value2"
-    fmt.Println(intValue) //output 1
-    fmt.Println(floatValue) //output 1.00
+    //When load file automatically change context file
+    err = gel.LoadFile("test/File2", "file2")
+    otherValue := gel.GetStr("key")
+    
+    //Setting context to previous file
+    gel.SetContext("file")
+        
+    fmt.Println(value)      // output "value"
+    fmt.Println(value2)     // "value2"
+    fmt.Println(intValue)   // 1
+    fmt.Println(floatValue) // 1.00
+    fmt.Println(otherValue) // value99
 }
 ```

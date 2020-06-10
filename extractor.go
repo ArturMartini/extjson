@@ -13,7 +13,7 @@ const (
 )
 
 type ext struct {
-	files map[string]file
+	file file
 }
 
 type file struct {
@@ -22,12 +22,13 @@ type file struct {
 
 type Type int
 
-var instance = ext{files: map[string]file{}}
+var instance = ext{}
+var files = map[string]file{}
 
-func GetStr(file, key string) string {
+func GetStr(key string) string {
 	var value string
 	var values interface{}
-	values = instance.files[file].values
+	values = instance.file.values
 	breadPath := strings.Split(key, ".")
 
 	for idx, p := range breadPath {
@@ -51,11 +52,11 @@ func GetStr(file, key string) string {
 	return value
 }
 
-func GetInt(file, key string) int {
+func GetInt(key string) int {
 	var value float64
 	var values interface{}
 	var hasValue bool
-	values = instance.files[file].values
+	values = instance.file.values
 	breadPath := strings.Split(key, ".")
 
 	for idx, p := range breadPath {
@@ -84,11 +85,11 @@ func GetInt(file, key string) int {
 	return int(math.Round(value))
 }
 
-func GetFloat(file, key string) float64 {
+func GetFloat(key string) float64 {
 	var value float64
 	var values interface{}
 	var hasValue bool
-	values = instance.files[file].values
+	values = instance.file.values
 	breadPath := strings.Split(key, ".")
 
 	for idx, p := range breadPath {
@@ -129,7 +130,14 @@ func LoadFile(path, name string) error {
 		log.Println("Error when try unmarshal json: " + path + "\nError: " + err.Error())
 		return err
 	}
-
-	instance.files[name] = file{values: values}
+	file := file{values: values}
+	files[name] = file
+	instance.file = file
 	return nil
+}
+
+func SetContext(name string) {
+	if f, ok := files[name]; ok {
+		instance.file = f
+	}
 }
