@@ -79,6 +79,22 @@ func TestGetStrComplexObject(t *testing.T) {
 	validate(t, expected, value)
 }
 
+func TestGetList(t *testing.T) {
+	expected := 2
+	values := GetList("list")
+	validate(t, expected, len(values))
+	validate(t, "1", values[0])
+	validate(t, "2", values[1])
+}
+
+func TestGetComplexList(t *testing.T) {
+	expected := 2
+	values := GetList("complexList.list")
+	validate(t, expected, len(values))
+	validate(t, "3", values[0])
+	validate(t, "4", values[1])
+}
+
 func TestMutipleFiles(t *testing.T) {
 	SetContext("json_file2")
 	expected := "value"
@@ -116,6 +132,11 @@ func TestFloatError(t *testing.T) {
 	expected := -1.00
 	value := GetFloat("not.exists")
 	validate(t, expected, value)
+}
+
+func TestListError(t *testing.T) {
+	values := GetList("not.exists")
+	validate(t, 0, len(values))
 }
 
 func validate(t *testing.T, expected, actual interface{}) {

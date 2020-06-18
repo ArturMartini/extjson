@@ -15,7 +15,11 @@ File:
     "key2": "value2"
   },
   "keyInt": 1,
-  "keyFloat": 1.00
+  "keyFloat": 1.00,
+  "list": [
+    "1",
+    "2"
+  ]
 }
 ```
 
@@ -48,6 +52,10 @@ func main() {
     intValue := gel.GetInt("keyInt")
     floatValue := gel.GetFloat("keyFloat")
     
+    //Suport to get list of string values
+    list := gel.GetList("list")
+
+    
     //When load file automatically change context file
     err = gel.LoadFile("test/File2", "file2")
     otherValue := gel.GetStr("key")
@@ -59,6 +67,7 @@ func main() {
     fmt.Println(value2)     // "value2"
     fmt.Println(intValue)   // 1
     fmt.Println(floatValue) // 1.00
+    fmt.Println(list)       // [1 2]
     fmt.Println(otherValue) // "value99"
 }
 ```

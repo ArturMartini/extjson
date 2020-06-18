@@ -42,7 +42,7 @@ func GetStr(key string) string {
 			continue
 		}
 
-		if idx >= len(breadPath){
+		if idx >= len(breadPath) {
 			continue
 		}
 
@@ -70,7 +70,7 @@ func GetInt(key string) int {
 			continue
 		}
 
-		if idx >= len(breadPath){
+		if idx >= len(breadPath) {
 			continue
 		}
 
@@ -103,7 +103,7 @@ func GetFloat(key string) float64 {
 			continue
 		}
 
-		if idx >= len(breadPath){
+		if idx >= len(breadPath) {
 			continue
 		}
 
@@ -115,6 +115,40 @@ func GetFloat(key string) float64 {
 		return -1.00
 	}
 	return value
+}
+
+func GetList(key string) []string {
+	var valueList []string
+	var values interface{}
+	var hasValue bool
+	values = instance.file.values
+	breadPath := strings.Split(key, ".")
+
+	for idx, p := range breadPath {
+		v, ok := values.(map[string]interface{})
+		if ok {
+			values = v[p]
+		}
+
+		list, ok := values.([]interface{})
+		if !ok {
+			continue
+		}
+
+		if idx >= len(breadPath) {
+			continue
+		}
+
+		hasValue = true
+		for _, vList := range list {
+			valueList = append(valueList, vList.(string))
+		}
+	}
+
+	if !hasValue {
+		return nil
+	}
+	return valueList
 }
 
 func LoadFile(path, name string) error {
