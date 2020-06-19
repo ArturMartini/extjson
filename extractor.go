@@ -218,3 +218,7 @@ func SetContext(name string) {
 		instance.file = f
 	}
 }
+
+func Cleanup() {
+	instance.file = file{map[string]interface{}{}}
+}

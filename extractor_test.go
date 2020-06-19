@@ -118,6 +118,19 @@ func TestMutipleFiles(t *testing.T) {
 	validate(t, expected, value)
 }
 
+func TestCleanup(t *testing.T) {
+	err := LoadFile("test/json_file.json", "json_file")
+	validate(t, nil, err)
+
+	v := GetStr("key")
+	validate(t, "value", v)
+
+	Cleanup()
+
+	v2 := GetStr("key")
+	validate(t, "", v2)
+}
+
 func TestLoadError(t *testing.T) {
 	expected := errors.New("open not/exists: no such file or directory")
 	err := LoadFile("not/exists", "notExists")
