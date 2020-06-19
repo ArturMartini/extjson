@@ -87,6 +87,14 @@ func TestGetList(t *testing.T) {
 	validate(t, "2", values[1])
 }
 
+func TestGetMap(t *testing.T) {
+	expected := 2
+	maps := GetMap("map")
+	validate(t, expected, len(maps))
+	validate(t, "value1", maps["key1"])
+	validate(t, "value2", maps["key2"])
+}
+
 func TestGetComplexList(t *testing.T) {
 	expected := 2
 	values := GetList("complexList.list")
@@ -136,6 +144,11 @@ func TestFloatError(t *testing.T) {
 
 func TestListError(t *testing.T) {
 	values := GetList("not.exists")
+	validate(t, 0, len(values))
+}
+
+func TestMapError(t *testing.T) {
+	values := GetMap("not.exists")
 	validate(t, 0, len(values))
 }
 
