@@ -3,7 +3,7 @@ This is a library to simplify extract json values in golang
 
 ## Features 
 * Extract json value by library  
-* Casting values to int and float
+* Casting values to int, float, list and map
 * Support to reference multiple files
 
 
@@ -19,7 +19,11 @@ File:
   "list": [
     "1",
     "2"
-  ]
+  ],
+  "map": {
+    "key1": "value1",
+    "key2": "value2"
+  }
 }
 ```
 
@@ -55,6 +59,8 @@ func main() {
     //Suport to get list of string values
     list := gel.GetList("list")
 
+    //Suport to get map of string values
+    vMap := gel.GetMap("map")
     
     //When load file automatically change context file
     err = gel.LoadFile("test/File2", "file2")
@@ -69,5 +75,9 @@ func main() {
     fmt.Println(floatValue) // 1.00
     fmt.Println(list)       // [1 2]
     fmt.Println(otherValue) // "value99"
+    fmt.Println(vMap)       // map[key1:value1 key2:value2]
+    
+    // Clean reference files
+    gel.Cleanup()
 }
 ```
