@@ -1,4 +1,4 @@
-package gel
+package extjson
 
 import (
 	"errors"
@@ -163,6 +163,43 @@ func TestListError(t *testing.T) {
 func TestMapError(t *testing.T) {
 	values := GetMap("not.exists")
 	validate(t, 0, len(values))
+}
+
+func TestFoundKey(t *testing.T) {
+	SetContext("json_file")
+
+	found := FoundKey("key")
+	validate(t, true, found)
+
+	foundComplex := FoundKey("complexObj.complexObj2")
+	validate(t, true, foundComplex)
+
+	foundInt := FoundKey("intKey_obj.key1")
+	validate(t, true, foundInt)
+
+	notFound := FoundKey("not.exists")
+	validate(t, false, notFound)
+}
+
+func TestAdd(t *testing.T) {
+	value := map[string]interface{}{
+		"keyadd1": "valueadd1",
+		"keyadd2": map[string]interface{}{
+			"keyadd22": "valueadd2",
+			"keyadd23": 1.0,
+			"keyadd3": 2.01,
+		},
+	}
+
+	Add(value)
+	v1 := GetStr("keyadd1")
+	validate(t, "valueadd1", v1)
+
+	v2 := GetInt("keyadd2.keyadd23")
+	validate(t, 1, v2)
+
+	v3 := GetFloat("keyadd2.keyadd3")
+	validate(t, 2.01, v3)
 }
 
 func validate(t *testing.T, expected, actual interface{}) {

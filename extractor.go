@@ -1,4 +1,4 @@
-package gel
+package extjson
 
 import (
 	"encoding/json"
@@ -211,6 +211,35 @@ func LoadFile(path, name string) error {
 	files[name] = file
 	instance.file = file
 	return nil
+}
+
+func FoundKey(key string) bool {
+	var values interface{}
+	values = instance.file.values
+	breadPath := strings.Split(key, ".")
+	found := false
+
+	for idx, p := range breadPath {
+		hasValue := false
+		v, ok := values.(map[string]interface{})
+		if ok {
+			hasValue = true
+			values = v[p]
+		}
+
+
+		if idx + 1 >= len(breadPath) && hasValue {
+			found = true
+		}
+	}
+
+	return found
+}
+
+func Add(value map[string]interface{}) {
+	for k, v := range value {
+		instance.file.values[k] = v
+	}
 }
 
 func SetContext(name string) {
