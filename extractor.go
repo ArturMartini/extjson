@@ -220,15 +220,13 @@ func FoundKey(key string) bool {
 	found := false
 
 	for idx, p := range breadPath {
-		hasValue := false
 		v, ok := values.(map[string]interface{})
 		if ok {
-			hasValue = true
 			values = v[p]
 		}
 
 
-		if idx + 1 >= len(breadPath) && hasValue {
+		if idx + 1 >= len(breadPath) && values != nil {
 			found = true
 		}
 	}

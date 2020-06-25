@@ -168,6 +168,9 @@ func TestMapError(t *testing.T) {
 func TestFoundKey(t *testing.T) {
 	SetContext("json_file")
 
+	foundNotFound := FoundKey("keyNotfound")
+	validate(t, false, foundNotFound)
+
 	found := FoundKey("key")
 	validate(t, true, found)
 
