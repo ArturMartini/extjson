@@ -87,12 +87,21 @@ func TestGetList(t *testing.T) {
 	validate(t, "2", values[1])
 }
 
-func TestGetMap(t *testing.T) {
+func TestGetMapStr(t *testing.T) {
 	expected := 2
+	maps := GetMapStr("map")
+	validate(t, expected, len(maps))
+	validate(t, "value1", maps["key1"])
+	validate(t, "value2", maps["key2"])
+}
+
+func TestGetMap(t *testing.T) {
+	expected := 3
 	maps := GetMap("map")
 	validate(t, expected, len(maps))
 	validate(t, "value1", maps["key1"])
 	validate(t, "value2", maps["key2"])
+	validate(t, 1.0, maps["key3"])
 }
 
 func TestGetComplexList(t *testing.T) {

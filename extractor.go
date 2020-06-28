@@ -151,7 +151,49 @@ func GetList(key string) []string {
 	return valueList
 }
 
-func GetMap(key string) map[string]string {
+func GetMap(key string) map[string]interface{} {
+	maps := map[string]interface{}{}
+	var values interface{}
+	var hasValue bool
+	values = instance.file.values
+	breadPath := strings.Split(key, ".")
+
+	for idx, p := range breadPath {
+		vMap, ok := values.(map[string]interface{})
+		if ok {
+			values = vMap[p]
+		} else {
+			continue
+		}
+
+		notStr := false
+		if len(vMap) > 0 && values != nil {
+			for k, v := range values.(map[string]interface{}) {
+				if !ok {
+					notStr = true
+				} else {
+					maps[k] = v
+					hasValue = true
+				}
+			}
+		}
+
+		if notStr {
+			continue
+		}
+
+		if idx >= len(breadPath) {
+			continue
+		}
+	}
+
+	if !hasValue {
+		return nil
+	}
+	return maps
+}
+
+func GetMapStr(key string) map[string]string {
 	maps := map[string]string{}
 	var values interface{}
 	var hasValue bool
