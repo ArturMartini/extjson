@@ -118,9 +118,8 @@ func GetFloat(key string) float64 {
 }
 
 func GetList(key string) []string {
-	var valueList []string
+	valueList := []string{}
 	var values interface{}
-	var hasValue bool
 	values = instance.file.values
 	breadPath := strings.Split(key, ".")
 
@@ -139,22 +138,17 @@ func GetList(key string) []string {
 			continue
 		}
 
-		hasValue = true
 		for _, vList := range list {
 			valueList = append(valueList, vList.(string))
 		}
 	}
 
-	if !hasValue {
-		return nil
-	}
 	return valueList
 }
 
 func GetMap(key string) map[string]interface{} {
 	maps := map[string]interface{}{}
 	var values interface{}
-	var hasValue bool
 	values = instance.file.values
 	breadPath := strings.Split(key, ".")
 
@@ -173,7 +167,6 @@ func GetMap(key string) map[string]interface{} {
 					notStr = true
 				} else {
 					maps[k] = v
-					hasValue = true
 				}
 			}
 		}
@@ -187,9 +180,6 @@ func GetMap(key string) map[string]interface{} {
 		}
 	}
 
-	if !hasValue {
-		return nil
-	}
 	return maps
 }
 

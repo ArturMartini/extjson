@@ -214,6 +214,18 @@ func TestAdd(t *testing.T) {
 	validate(t, 2.01, v3)
 }
 
+func TestPointerInitWithoutNil(t *testing.T) {
+	list := GetList("not.exists")
+	if list == nil {
+		reportError(t, "[]string{}", "nil")
+	}
+
+	maps := GetMap("not.exists")
+	if maps == nil {
+		reportError(t, "map[string]string{}", "nil")
+	}
+}
+
 func validate(t *testing.T, expected, actual interface{}) {
 	if expected != actual {
 		reportError(t, expected, actual)
