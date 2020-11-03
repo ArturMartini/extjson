@@ -69,7 +69,7 @@ func TestGetFloatInnerObject(t *testing.T) {
 
 func TestGetFloatInnerObjectLayerTwo(t *testing.T) {
 	expected := 2.02
-	value  := GetFloat("floatKey_obj2.intKey_obj3.key2")
+	value := GetFloat("floatKey_obj2.intKey_obj3.key2")
 	validate(t, expected, value)
 }
 
@@ -158,6 +158,12 @@ func TestIntError(t *testing.T) {
 	validate(t, expected, value)
 }
 
+func TestBoolError(t *testing.T) {
+	expected := false
+	value := GetBool("not.exists")
+	validate(t, expected, value)
+}
+
 func TestFloatError(t *testing.T) {
 	expected := -1.00
 	value := GetFloat("not.exists")
@@ -199,7 +205,8 @@ func TestAdd(t *testing.T) {
 		"keyadd2": map[string]interface{}{
 			"keyadd22": "valueadd2",
 			"keyadd23": 1.0,
-			"keyadd3": 2.01,
+			"keyadd24":  2.01,
+			"keyadd25": true,
 		},
 	}
 
@@ -210,8 +217,11 @@ func TestAdd(t *testing.T) {
 	v2 := GetInt("keyadd2.keyadd23")
 	validate(t, 1, v2)
 
-	v3 := GetFloat("keyadd2.keyadd3")
+	v3 := GetFloat("keyadd2.keyadd24")
 	validate(t, 2.01, v3)
+
+	v4 := GetBool("keyadd2.keyadd25")
+	validate(t, true, v4)
 }
 
 func TestPointerInitWithoutNil(t *testing.T) {

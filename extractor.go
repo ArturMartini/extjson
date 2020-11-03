@@ -85,6 +85,39 @@ func GetInt(key string) int {
 	return int(math.Round(value))
 }
 
+func GetBool(key string) bool {
+	var value bool
+	var values interface{}
+	var hasValue bool
+	values = instance.file.values
+	breadPath := strings.Split(key, ".")
+
+	for idx, p := range breadPath {
+		v, ok := values.(map[string]interface{})
+		if ok {
+			values = v[p]
+		}
+
+		boolean, ok := values.(bool)
+		if !ok {
+			continue
+		}
+
+		if idx >= len(breadPath) {
+			continue
+		}
+
+		hasValue = true
+		value = boolean
+	}
+
+	if !hasValue {
+		return false
+	}
+
+	return value
+}
+
 func GetFloat(key string) float64 {
 	var value float64
 	var values interface{}
@@ -257,8 +290,7 @@ func FoundKey(key string) bool {
 			values = v[p]
 		}
 
-
-		if idx + 1 >= len(breadPath) && values != nil {
+		if idx+1 >= len(breadPath) && values != nil {
 			found = true
 		}
 	}
